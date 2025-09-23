@@ -63,3 +63,6 @@ python manage.py migrate
 
 # 访问
 - http://127.0.0.1:8000/api/
+# 参考
+- https://github.com/pgvector/pgvector-python
+- https://juejin.cn/post/7337579872746127369
