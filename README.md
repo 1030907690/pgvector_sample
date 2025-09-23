@@ -1,7 +1,7 @@
 # pgvector_sample
 - PostgreSQL pgvector sample
 
-# 初始化项目
+# 项目依赖环境
 ```bash
 conda create -n pgvector_sample python=3.10.6
 conda activate pgvector_sample
@@ -9,6 +9,7 @@ pip install django
 django-admin startproject pgvector_sample
 pip install djangorestframework
 pip install psycopg[binary]
+pip install pgvector
 ```
 
 
@@ -18,14 +19,17 @@ pip install hf_xet
 pip install protobuf
 ```
 
-```
+
+
+# 配置
+```bash
 python manage.py startapp app
 
 ```
 
-# 配置
 
 ```
+
 INSTALLED_APPS [
 ...省略...
 'rest_framework',
@@ -39,11 +43,23 @@ INSTALLED_APPS [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'your_db_name',
-        'USER': 'your_db_user',
-        'PASSWORD': 'your_db_password',
+        'NAME': 'vector_sample',
+        'USER': 'postgres',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
+
 ```
+
+# 生成表
+
+```
+python manage.py makemigrations
+python manage.py migrate
+
+```
+
+# 访问
+- http://127.0.0.1:8000/api/
