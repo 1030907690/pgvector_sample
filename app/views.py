@@ -16,11 +16,13 @@ from pgvector.django import L2Distance
 def vector(request):
     model = SentenceTransformer('clip-ViT-B-32')
     # Encode an image:
-    img_emb = model.encode(Image.open('C:/Users/Administrator/Pictures/sc.png'))
+    # img_emb = model.encode(Image.open('C:/Users/Administrator/Pictures/sc.png'))
+    img_emb = model.encode(Image.open('C:/Users/Administrator/Pictures/Screenshot 2025-09-14 180548.png'))
     print(len(img_emb.tolist()))
     print(img_emb.tolist())
     if request.method == 'GET':
-        result = Item.objects.order_by(L2Distance('embedding', img_emb.tolist()))[:5]
+        # result = Item.objects.order_by(L2Distance('embedding', img_emb.tolist()))[:5]
+        result = Item.objects.alias(distance=L2Distance('embedding', img_emb.tolist())).filter(distance__lt=2)
         serializer = ItemSerializer(result, many=True)
         return Response(serializer.data)
     if request.method == 'POST':
